@@ -6,108 +6,101 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
+  Image,
+  TextInput,
+  TouchableOpacity,
 } from 'react-native';
+import logo from './src/resources/images/logo.png'
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import axios from 'axios'
 
 const App: () => React$Node = () => {
+
+  const [usuario, setUsuario] = useState('');
+  const [senha, setSenha] = useState('');
+  const api = axios.create({
+    baseURL: 'https://localhost:44340/api/Usuario',
+  });
+
+  useEffect(() => {
+
+    // const r = await api.post("", { usuario: 'samuel.vaz', senha: '123213' })
+    // console.log('data', r);
+
+  }, []);
+
+  _onPress = () => {
+    console.log('teste', usuario, senha)
+  };
+  
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <View style={styles.container}>
+        <View style={styles.containerImagem}>
+          <Image
+            source={logo}
+            style={styles.imagem}
+            resizeMode="contain"
+          />
+        </View>
+        <View>
+          <TextInput
+            onChangeText={text => setUsuario(text)}
+            style={styles.textInput}
+            underlineColorAndroid="black"
+            placeholder="Usuário"
+          />
+          <TextInput
+            onChangeText={text => setSenha(text)}
+            style={styles.textInput}
+            underlineColorAndroid="black"
+            placeholder="Senha"
+            secureTextEntry={true}
+            maxLength={12}
+          />
+          <TouchableOpacity style={styles.button} onPress={() => _onPress()}>
+            <Text style={styles.textButton}>Entrar</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  containerImagem: {
+    alignItems: 'center',
+    paddingBottom: 50,
   },
-  body: {
-    backgroundColor: Colors.white,
+  imagem: {
+    justifyContent: 'center',
+    width: 300,
+    height: 100,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  textInput: {
+    fontSize: 21,
+    paddingBottom: 10,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
+  button: {
+    backgroundColor: 'black',
+    borderRadius: 3,
+    marginTop: 10,
+    padding: 10,
   },
-  sectionDescription: {
-    marginTop: 8,
+  textButton: {
+    textAlign: 'center',
+    color: '#ffff',
     fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
   },
 });
 
