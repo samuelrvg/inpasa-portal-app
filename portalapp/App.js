@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -17,22 +17,10 @@ import {
 } from 'react-native';
 import logo from './src/resources/images/logo.png'
 
-import axios from 'axios'
-
-const App: () => React$Node = () => {
+const App = () => {
 
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
-  const api = axios.create({
-    baseURL: 'https://localhost:44340/api/Usuario',
-  });
-
-  useEffect(() => {
-
-    // const r = await api.post("", { usuario: 'samuel.vaz', senha: '123213' })
-    // console.log('data', r);
-
-  }, []);
 
   _onPress = () => {
     console.log('teste', usuario, senha)
